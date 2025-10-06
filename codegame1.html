@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Code Game MCQ Quiz 🎮</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+  }
+  h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  .question {
+    font-size: 1.4em;
+    margin: 20px 0;
+  }
+  .options {
+    font-size: 1.2em;
+    margin: 20px 0;
+  }
+  label {
+    display: block;
+    padding: 10px;
+    margin: 10px auto;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  label:hover {
+    background: rgba(255,255,255,0.4);
+  }
+  button {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    background-color: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    margin-top: 25px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background-color: #eee;
+  }
+  #result {
+    font-size: 2em;
+    margin-top: 30px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="quiz-box">
+  <!-- Dynamic content inserted here -->
+</div>
+
+<script>
+const questions = [
+  {
+    q: "1. What type of game is Code Game built on the Solana blockchain?",
+    options: ["a) Play-to-earn blockchain game", "b) DeFi app", "c) NFT marketplace", "d) Farming protocol"],
+    answer: 0
+  },
+  {
+    q: "2. Which rewards are featured in Code Game?",
+    options: ["a) Fiat payouts", "b) NFTs and staking rewards", "c) Only tokens", "d) Crowdfunding"],
+    answer: 1
+  },
+  {
+    q: "3. Why is Solana a good blockchain for Code Game?",
+    options: ["a) High speed, low fees", "b) High fees", "c) Proof of Work", "d) Ethereum compatibility"],
+    answer: 0
+  },
+  {
+    q: "4. What is staking in Code Game?",
+    options: ["a) Borrow tokens", "b) Lock assets for rewards", "c) Instant trading", "d) Early access"],
+    answer: 1
+  },
+  {
+    q: "5. Benefits of joining Code Game Discord?",
+    options: ["a) Early access", "b) Updates", "c) Giveaways", "d) All of the above"],
+    answer: 3
+  }
+];
+
+let currentPage = 0;
+let score = 0;
+
+function loadPage() {
+  const box = document.getElementById("quiz-box");
+  box.innerHTML = '';
+  if (currentPage < questions.length) {
+    const q = questions[currentPage];
+    box.innerHTML = `
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt, i) => `
+          <label><input type="radio" name="answer" value="${i}"> ${opt}</label>
+        `).join('')}
+      </div>
+      <button onclick="nextQuestion()">Next ➡️</button>
+    `;
+  } else {
+    showResult();
+  }
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('input[name="answer"]:checked');
+  if (!selected) {
+    alert("Please select an answer!");
+    return;
+  }
+  const answerIndex = parseInt(selected.value);
+  if (answerIndex === questions[currentPage].answer) {
+    score++;
+  }
+  currentPage++;
+  loadPage();
+}
+
+function showResult() {
+  const box = document.getElementById("quiz-box");
+  let emojiResult = '';
+  if (score === questions.length) {
+    emojiResult = '🎉🔥 Amazing!';
+  } else if (score >= 3) {
+    emojiResult = '👍 Nice!';
+  } else {
+    emojiResult = '🤔 Keep Trying!';
+  }
+  box.innerHTML = `
+    <div id="result">Your Final Score: ${score} / ${questions.length} ${emojiResult}</div>
+  `;
+}
+
+loadPage();
+</script>
+
+</body>
+</html>
